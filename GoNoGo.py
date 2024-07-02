@@ -3,24 +3,31 @@ from tkinter import messagebox
 
 # Function to be called when button is pressed
 def show_message():
-    inputs = [entry.get() for entry in entries]
+    time = [entry.get() for entry in entries]
     
     sum_of_entries = 0
 
     message = ""
-    for day, input in zip(weekdays, inputs):
+    for day, time in zip(weekdays, time):
         try:
-            value = int(input)
+            value = int(time)  # Correctly convert the string to an integer
         except ValueError:
             value = 0
         sum_of_entries += value
-        message += f"{day}: {input}\n"
+        converted_time = convert_decimal_hours_to_time(value)
+        message += f"{day}: {time}\n"
     
-    message += f"\nTotal Sum: {sum_of_entries}"
+    message += f"\nTotal Sum: {convert_decimal_hours_to_time(sum_of_entries)}"  # Fix the total sum conversion
     messagebox.showinfo("Message", message)
     
     #message = "\n".join(f"{day}: {input}" for day, input in zip(weekdays, inputs))
     #messagebox.showinfo("Message", message)
+
+
+def convert_decimal_hours_to_time(value):
+    hours = int(value)
+    minutes = int((value - hours)*60)
+    return hours, minutes
 
 # Create the main window
 root = tk.Tk()
