@@ -15,9 +15,8 @@ def show_message():
             value = 0
         sum_of_entries += value
         converted_time = convert_decimal_hours_to_time(value)
-        message += f"{day}: {time}\n"
-    #TODO: fix he function, it is printing 0.0 for some reason
-    message += f"\nTotal Sum: {convert_decimal_hours_to_time(sum_of_entries)}"  # Fix the total sum conversion
+        message += f"{day}: {converted_time[0]}:{converted_time[1]}\n"
+    message += f"\nTotal Sum: {convert_decimal_hours_to_time(sum_of_entries)[0]}:{convert_decimal_hours_to_time(sum_of_entries)[1]}"
     messagebox.showinfo("Message", message)
     
     #message = "\n".join(f"{day}: {input}" for day, input in zip(weekdays, inputs))
