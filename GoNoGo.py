@@ -10,7 +10,7 @@ def show_message():
     message = ""
     for day, time in zip(weekdays, time):
         try:
-            value = int(time)  # Correctly convert the string to an integer
+            value = float(time)  # Correctly convert the string to an integer
         except ValueError:
             value = 0
         sum_of_entries += value
@@ -19,14 +19,15 @@ def show_message():
     message += f"\nTotal Sum: {convert_decimal_hours_to_time(sum_of_entries)[0]}:{convert_decimal_hours_to_time(sum_of_entries)[1]}"
     messagebox.showinfo("Message", message)
     
-    #message = "\n".join(f"{day}: {input}" for day, input in zip(weekdays, inputs))
-    #messagebox.showinfo("Message", message)
+   #TODO: fix time presentation
 
 
 def convert_decimal_hours_to_time(value):
-    hours = int(value)
-    minutes = int((value - hours)*60)
-    return hours, minutes
+    total_minutes = value * 60
+    hours = total_minutes // 60
+    minutes = total_minutes % 60
+    return int(hours), int(minutes)
+    
 
 # Create the main window
 root = tk.Tk()
