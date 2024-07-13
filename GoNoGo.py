@@ -1,5 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
+import datetime
+
+work_time = 41.5
 
 # Function to be called when button is pressed
 def show_message():
@@ -18,7 +21,7 @@ def show_message():
         converted_time = convert_decimal_hours_to_time(value)
         message += f"{day}: {converted_time[0]:02d}:{converted_time[1]:02d}\n"
     
-    message += f"Friday start time: {friday_start_time}\n"
+    message += f"Friday start time: {friday_start_time}\n"  #TODO: need to convert friday time to TIME
     message += f"\nTotal Sum: {convert_decimal_hours_to_time(sum_of_entries)[0]:02d}:{convert_decimal_hours_to_time(sum_of_entries)[1]:02d}"
     messagebox.showinfo("Message", message)
 
