@@ -33,7 +33,7 @@ def show_message():
     go_home_time_converted = go_home_time.strftime("%H:%M")
     message += f"GoHome: {go_home_time_converted}\n"
     total_sum_time = convert_decimal_hours_to_time(sum_of_entries)
-    message += f"\nTotal Sum: {total_sum_time[0]:02d}:{total_sum_time[1]:02d}"
+    #message += f"\nTotal Sum: {total_sum_time[0]:02d}:{total_sum_time[1]:02d}"
     messagebox.showinfo("Message", message)
 
 def calc_GoHomeTime(friday_start, remaining_hours):
