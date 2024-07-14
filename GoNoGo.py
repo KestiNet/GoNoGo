@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import datetime
+from datetime import datetime, timedelta
 
 work_time = 41.5
 
@@ -10,11 +10,10 @@ def show_message():
     friday_start_time = friday_start_entry.get()
 
     try:
-        friday_start_value = float(friday_start_time)
+        friday_start_datetime = datetime.strptime(friday_start_time, "%H:%M")
     except ValueError:
-        friday_start_value = 0
-    
-    converted_friday = convert_decimal_hours_to_time(friday_start_value)
+        messagebox.showerror("Invalid input", "Please enter a valid time in HH:MM format for Friday start time.")
+        return
 
     sum_of_entries = 0
     message = ""
@@ -27,19 +26,22 @@ def show_message():
         converted_time = convert_decimal_hours_to_time(value)
         message += f"{day}: {converted_time[0]:02d}:{converted_time[1]:02d}\n"
 
-    message += f"Friday start time: {converted_friday[0]:02d}:{converted_friday[1]:02d}\n"
-    go_home_time = calc_GoHomeTime(sum_of_entries)
-    go_home_time_converted = convert_decimal_hours_to_time(go_home_time)
-    message += f"GoHome: {go_home_time_converted[0]:02d}:{go_home_time_converted[1]:02d}\n"
+    message += f"Friday start time: {friday_start_time}\n"
+    
+    remaining_hours = work_time - sum_of_entries
+    go_home_time = calc_GoHomeTime(friday_start_datetime, remaining_hours)
+    go_home_time_converted = go_home_time.strftime("%H:%M")
+    message += f"GoHome: {go_home_time_converted}\n"
     total_sum_time = convert_decimal_hours_to_time(sum_of_entries)
     message += f"\nTotal Sum: {total_sum_time[0]:02d}:{total_sum_time[1]:02d}"
     messagebox.showinfo("Message", message)
 
-def calc_GoHomeTime(sum_of_enteries):
-    GoHome = work_time - sum_of_enteries
-    return GoHome
-
-
+def calc_GoHomeTime(friday_start, remaining_hours):
+    # Calculate go home time
+    go_home_time = friday_start + timedelta(hours=remaining_hours)
+    
+    # Return go home time as datetime
+    return go_home_time
 
 def convert_decimal_hours_to_time(value):
     total_minutes = value * 60
@@ -70,7 +72,7 @@ for i, day in enumerate(weekdays):
     entries.append(entry)
 
 # Ask the user to enter Friday start time
-friday_start_label = tk.Label(input_frame, text="Friday start time:")
+friday_start_label = tk.Label(input_frame, text="Friday start time (HH:MM):")
 friday_start_label.grid(row=len(weekdays), column=0, padx=5, pady=5, sticky=tk.W)
 
 friday_start_entry = tk.Entry(input_frame)
